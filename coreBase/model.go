@@ -2,6 +2,7 @@ package corebase
 
 import (
 	"github.com/tzRex/freely-handle/before"
+	customType "github.com/tzRex/freely-handle/customTypes"
 	"gorm.io/gorm"
 )
 
@@ -12,10 +13,10 @@ type IModel interface {
 
 // 因为gorm自带的model返回的时间类型格式不规范，所以这里自己重新定义一下
 type BaseModel struct {
-	ID        uint           `gorm:"primarykey" json:"id"`
-	CreatedAt customTime     `gorm:"comment:创建时间" json:"createdAt"`
-	UpdatedAt customTime     `gorm:"comment:更新时间" json:"updatedAt"`
-	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
+	ID        uint                  `gorm:"primarykey" json:"id"`
+	CreatedAt customType.CustomTime `gorm:"comment:创建时间" json:"createdAt"`
+	UpdatedAt customType.CustomTime `gorm:"comment:更新时间" json:"updatedAt"`
+	DeletedAt gorm.DeletedAt        `gorm:"index" json:"-"`
 }
 
 // 用于搜集迁移失败的数据

@@ -1,4 +1,4 @@
-package corebase
+package customType
 
 import (
 	"database/sql/driver"
@@ -9,7 +9,7 @@ import (
 	corecode "github.com/tzRex/freely-handle/coreCode"
 )
 
-type customTime struct {
+type CustomTime struct {
 	time.Time
 }
 
@@ -20,7 +20,7 @@ var (
 )
 
 // 序列化时的回调：json.Marshal
-func (ct *customTime) MarshalJSON() ([]byte, error) {
+func (ct *CustomTime) MarshalJSON() ([]byte, error) {
 	if ct == nil || ct.Time.IsZero() {
 		return []byte("null"), nil
 	}
@@ -29,7 +29,7 @@ func (ct *customTime) MarshalJSON() ([]byte, error) {
 }
 
 // 反序列化时的回调：json.Unmarshal
-func (ct *customTime) UnmarshalJSON(b []byte) error {
+func (ct *CustomTime) UnmarshalJSON(b []byte) error {
 	str := strings.ReplaceAll(string(b), "\"", "")
 
 	if str == "" || str == "null" || str == "None" {
@@ -47,7 +47,7 @@ func (ct *customTime) UnmarshalJSON(b []byte) error {
 }
 
 // gorm写入数据的回调
-func (ct customTime) Value() (driver.Value, error) {
+func (ct CustomTime) Value() (driver.Value, error) {
 	if ct.Time.IsZero() {
 		return nil, nil
 	}
@@ -56,7 +56,7 @@ func (ct customTime) Value() (driver.Value, error) {
 }
 
 // gorm读取数据的回调
-func (ct *customTime) Scan(value interface{}) error {
+func (ct *CustomTime) Scan(value interface{}) error {
 	b, ok := value.(time.Time)
 	if !ok {
 		return corecode.ErrColumnTypeFail

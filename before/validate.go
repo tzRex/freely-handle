@@ -9,7 +9,7 @@ import (
 
 var Valid *validator.Validate
 
-func init() {
+func RegisterValidate() {
 	validate := validator.New()
 	validate.RegisterValidation("phone", validatePhone)
 	validate.RegisterValidation("chinese", validateChinese)
